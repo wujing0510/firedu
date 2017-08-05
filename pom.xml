@@ -9,6 +9,7 @@
     <version>1.0</version>
     <modules>
         <module>firedu-eureka-server</module>
+        <module>firedu-config</module>
     </modules>
     <packaging>pom</packaging>
     
