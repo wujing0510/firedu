@@ -10,6 +10,7 @@
     <modules>
         <module>firedu-eureka-server</module>
         <module>firedu-service-config</module>
+        <module>firedu-service-library</module>
     </modules>
     <packaging>pom</packaging>
     
