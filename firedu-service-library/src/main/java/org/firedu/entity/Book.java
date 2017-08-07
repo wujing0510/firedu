@@ -20,32 +20,12 @@ public class Book {
     String translator; //翻译者
     String description; //描述
     String language; //语言
-    String subject; //分类
-    Date date; //日期
+    String subject1; //分类1
+    String subject2; //分类2
+    Date datetime; //日期
     String publisher; //出版商
-    String asin; //出版商
-    String coverPath; //封面
-    String copyrightPath; //封面
-
 
     public Book() {
-    }
-
-    public Book(Long id, String title, String author, String translator,
-                String description, String language, String subject, Date date,
-                String publisher, String asin, String coverPath, String copyrightPath) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.translator = translator;
-        this.description = description;
-        this.language = language;
-        this.subject = subject;
-        this.date = date;
-        this.publisher = publisher;
-        this.asin = asin;
-        this.coverPath = coverPath;
-        this.copyrightPath = copyrightPath;
     }
 
     @Id
@@ -103,22 +83,31 @@ public class Book {
         this.language = language;
     }
 
-    @Column(name = "SUBJECT", length = 100)
-    public String getSubject() {
-        return subject;
+    @Column(name = "SUBJECT1", length = 100)
+    public String getSubject1() {
+        return subject1;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setSubject1(String subject1) {
+        this.subject1 = subject1;
+    }
+
+    @Column(name = "SUBJECT2", length = 100)
+    public String getSubject2() {
+        return subject2;
+    }
+
+    public void setSubject2(String subject2) {
+        this.subject2 = subject2;
     }
 
     @Column(name = "DATE")
-    public Date getDate() {
-        return date;
+    public Date getDatetime() {
+        return datetime;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDatetime(Date datetime) {
+        this.datetime = datetime;
     }
 
     @Column(name = "PUBLISHER", length = 100)
@@ -128,33 +117,6 @@ public class Book {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
-    }
-
-    @Column(name = "ASIN", length = 200)
-    public String getAsin() {
-        return asin;
-    }
-
-    public void setAsin(String asin) {
-        this.asin = asin;
-    }
-
-    @Column(name = "COVER_PATH", length = 200)
-    public String getCoverPath() {
-        return coverPath;
-    }
-
-    public void setCoverPath(String coverPath) {
-        this.coverPath = coverPath;
-    }
-
-    @Column(name = "COPYRIGHT_PATH", length = 200)
-    public String getCopyrightPath() {
-        return copyrightPath;
-    }
-
-    public void setCopyrightPath(String copyrightPath) {
-        this.copyrightPath = copyrightPath;
     }
 
 }

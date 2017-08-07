@@ -11,6 +11,9 @@
         <module>firedu-eureka-server</module>
         <module>firedu-service-config</module>
         <module>firedu-service-library</module>
+        <module>firedu-service-web</module>
+        <module>firedu-service-gateway</module>
+        <module>firedu-service-bus</module>
     </modules>
     <packaging>pom</packaging>
     

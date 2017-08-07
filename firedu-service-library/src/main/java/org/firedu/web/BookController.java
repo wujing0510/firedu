@@ -1,6 +1,5 @@
 package org.firedu.web;
 
-import org.apache.commons.lang.StringUtils;
 import org.firedu.entity.Book;
 import org.firedu.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -20,10 +20,8 @@ public class BookController {
 
 
     @RequestMapping("/findById")
-    public Book findById(@RequestParam("id") String id) {
-        Book book = new Book();
-        book.setId(1L);
-        book.setTitle("Book[" + id + "]");
+    public Book findById(@RequestParam("id") Long id) {
+        Book book = bookRepository.findOne(id);
         return book;
     }
 
@@ -32,7 +30,15 @@ public class BookController {
 
         Assert.hasText(ids, "params[ids] cannot be empty!");
 
-        List<Book> books = bookRepository.findAll();
+        String[] idArray = ids.split(",");
+
+        List<Long> idList = new ArrayList();
+
+        for (String sid: idArray) {
+            idList.add(Long.parseLong(sid));
+        }
+
+        List<Book> books = bookRepository.findAll(idList);
 
         return books;
     }
