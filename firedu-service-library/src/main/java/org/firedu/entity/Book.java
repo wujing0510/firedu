@@ -1,12 +1,6 @@
 package org.firedu.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,36 +11,69 @@ import java.util.List;
 
 @Entity
 @Table(name = "LIB_BOOK")
-public class Book implements Serializable {
+public class Book extends BaseModel {
 
-    Long id;
+    @Column(name = "TITLE", length = 500)
     String title; //书名
+
+    @Column(name = "AUTHOR", length = 100)
     String author; //作者
+
+    @Column(name = "TRANSLATOR", length = 100)
     String translator; //翻译者
+
+    @Column(name = "DESCRIPTION", length = 500)
     String description; //描述
+
+    @Column(name = "LANGUAGE", length = 3)
     String language; //语言
+
+    @Column(name = "SUBJECT1", length = 100)
     String subject1; //分类1
+
+    @Column(name = "SUBJECT2", length = 100)
     String subject2; //分类2
+
+    @Column(name = "DATETIME", length = 100)
     String datetime; //日期
+
+    @Column(name = "PUBLISHER", length = 100)
     String publisher; //出版商
+
+    @Column(name = "ASIN", length = 100)
     String asin; //MOBI-ASIN
+
+    @Column(name = "UUID", length = 100)
     String uuid; //uuid
+
+    @Column(name = "COVER", length = 100)
     String cover; //cover
 
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     List<Volume> volumes;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     List<Chapter> chapters;
 
     public Book() {
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
+    public Book(Long id, String title, String author, String translator, String description,
+                String language, String subject1, String subject2, String datetime,
+                String publisher, String asin, String uuid, String cover) {
         this.id = id;
+        this.title = title;
+        this.author = author;
+        this.translator = translator;
+        this.description = description;
+        this.language = language;
+        this.subject1 = subject1;
+        this.subject2 = subject2;
+        this.datetime = datetime;
+        this.publisher = publisher;
+        this.asin = asin;
+        this.uuid = uuid;
+        this.cover = cover;
     }
 
     @Column(name = "TITLE", length = 500)
@@ -157,7 +184,7 @@ public class Book implements Serializable {
         this.cover = cover;
     }
 
-    @JsonIgnoreProperties(value={"hibernateLazyInitializer"})
+
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     public List<Volume> getVolumes() {
         return volumes;
@@ -167,7 +194,7 @@ public class Book implements Serializable {
         this.volumes = volumes;
     }
 
-    @JsonIgnoreProperties(value={"hibernateLazyInitializer"})
+
     @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     public List<Chapter> getChapters() {
         return chapters;

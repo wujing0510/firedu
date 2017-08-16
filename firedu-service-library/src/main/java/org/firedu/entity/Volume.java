@@ -1,11 +1,9 @@
 package org.firedu.entity;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.BatchSize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,32 +14,28 @@ import java.util.List;
 
 @Entity
 @Table(name = "LIB_VOLUME")
-@BatchSize(size = 20)
-public class Volume implements Serializable {
+public class Volume extends BaseModel {
 
-    Long id;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "BOOK_ID")
     Book book;
+
+    @Column(name = "TITLE", length = 512)
     String title;
+
+    @Column(name = "DESCRIPTION", length = 1024)
     String description; //描述
+
+    @Column(name = "ORDER_NUM", length = 3)
     Integer order_num;
 
+    @OneToMany(mappedBy = "volume", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     List<Chapter> chapters;
+
+    @OneToMany(mappedBy = "volume", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     List<Article> articles;
 
-    @Id
-    @Column(name = "ID", length = 20)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-
-    @ManyToOne(cascade = {CascadeType.ALL }, fetch = FetchType.LAZY)
-    @JoinColumn(name = "BOOK_ID")
     public Book getBook() {
         return book;
     }
@@ -50,7 +44,6 @@ public class Volume implements Serializable {
         this.book = book;
     }
 
-    @Column(name = "TITLE", length = 512)
     public String getTitle() {
         return title;
     }
@@ -59,7 +52,6 @@ public class Volume implements Serializable {
         this.title = title;
     }
 
-    @Column(name = "DESCRIPTION", length = 1024)
     public String getDescription() {
         return description;
     }
@@ -68,7 +60,6 @@ public class Volume implements Serializable {
         this.description = description;
     }
 
-    @Column(name = "ORDER_NUM", length = 3)
     public Integer getOrder_num() {
         return order_num;
     }
@@ -77,8 +68,6 @@ public class Volume implements Serializable {
         this.order_num = order_num;
     }
 
-    @JsonIgnoreProperties(value={"hibernateLazyInitializer"})
-    @OneToMany(mappedBy = "volume", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     public List<Chapter> getChapters() {
         return chapters;
     }
@@ -87,8 +76,6 @@ public class Volume implements Serializable {
         this.chapters = chapters;
     }
 
-    @JsonIgnoreProperties(value={"hibernateLazyInitializer"})
-    @OneToMany(mappedBy = "volume", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     public List<Article> getArticles() {
         return articles;
     }

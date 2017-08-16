@@ -1,8 +1,9 @@
 package org.firedu.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
 /**
  * @author wujing0510@gmail.com
@@ -11,27 +12,22 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "LIB_SECTION")
-public class Section implements Serializable {
+public class Section extends BaseModel {
 
-    Long id;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "ARTICLE_ID")
     Article article;
+
+    @Column(name = "CONTENT", length = 1024)
     String content;
+
+    @Column(name = "ORDER_NUM", length = 3)
     Integer order_num;
+
+    @Column(name = "DESCRIPTION", length = 1024)
     String description; //描述
 
-    @Id
-    @Column(name = "ID", length = 20)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @ManyToOne(cascade = {CascadeType.ALL }, fetch = FetchType.LAZY)
-    @JoinColumn(name = "ARTICLE_ID")
     public Article getArticle() {
         return article;
     }
@@ -40,7 +36,6 @@ public class Section implements Serializable {
         this.article = article;
     }
 
-    @Column(name = "CONTENT", length = 1024)
     public String getContent() {
         return content;
     }
@@ -49,7 +44,6 @@ public class Section implements Serializable {
         this.content = content;
     }
 
-    @Column(name = "ORDER_NUM", length = 3)
     public Integer getOrder_num() {
         return order_num;
     }
@@ -58,7 +52,6 @@ public class Section implements Serializable {
         this.order_num = order_num;
     }
 
-    @Column(name = "DESCRIPTION", length = 1024)
     public String getDescription() {
         return description;
     }
@@ -66,5 +59,4 @@ public class Section implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

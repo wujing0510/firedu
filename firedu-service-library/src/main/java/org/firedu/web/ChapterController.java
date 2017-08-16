@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * TODO
  *
@@ -25,5 +27,10 @@ public class ChapterController {
     public Chapter findById(@RequestParam("id") Long id) {
         Chapter chapter = chapterService.findOne(id);
         return chapter;
+    }
+    @RequestMapping("/findByBookId")
+    public List<Chapter> findByBookId(@RequestParam("bookId") Long bookId) {
+        List<Chapter> chapters = chapterService.findByBookId(bookId);
+        return chapters;
     }
 }
