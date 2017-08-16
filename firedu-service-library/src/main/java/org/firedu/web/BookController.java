@@ -2,6 +2,7 @@ package org.firedu.web;
 
 import org.firedu.entity.Book;
 import org.firedu.repository.BookRepository;
+import org.firedu.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +19,29 @@ public class BookController {
     @Autowired
     BookRepository bookRepository;
 
+    @Autowired
+    BookService bookService;
+
 
     @RequestMapping("/findById")
     public Book findById(@RequestParam("id") Long id) {
         Book book = bookRepository.findOne(id);
+        book.setChapters(null);
+        book.setVolumes(null);
         return book;
+    }
+
+    @RequestMapping("/parseBook")
+    public Book parseBook() {
+        Book book = bookService.parseBook();
+        bookRepository.save(book);
+        return new Book();
+    }
+
+    @RequestMapping("/findByTitle")
+    public List<Book> findByTitle(@RequestParam("title") String title) {
+        List<Book> books = bookRepository.findByTitle(title);
+        return books;
     }
 
     @RequestMapping("/findByIds")

@@ -1,8 +1,13 @@
 package org.firedu.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author wujing
@@ -12,7 +17,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "LIB_BOOK")
-public class Book {
+public class Book implements Serializable {
 
     Long id;
     String title; //书名
@@ -22,8 +27,14 @@ public class Book {
     String language; //语言
     String subject1; //分类1
     String subject2; //分类2
-    Date datetime; //日期
+    String datetime; //日期
     String publisher; //出版商
+    String asin; //MOBI-ASIN
+    String uuid; //uuid
+    String cover; //cover
+
+    List<Volume> volumes;
+    List<Chapter> chapters;
 
     public Book() {
     }
@@ -101,12 +112,12 @@ public class Book {
         this.subject2 = subject2;
     }
 
-    @Column(name = "DATE")
-    public Date getDatetime() {
+    @Column(name = "datetime", length = 100)
+    public String getDatetime() {
         return datetime;
     }
 
-    public void setDatetime(Date datetime) {
+    public void setDatetime(String datetime) {
         this.datetime = datetime;
     }
 
@@ -117,6 +128,53 @@ public class Book {
 
     public void setPublisher(String publisher) {
         this.publisher = publisher;
+    }
+
+    @Column(name = "ASIN", length = 100)
+    public String getAsin() {
+        return asin;
+    }
+
+    public void setAsin(String asin) {
+        this.asin = asin;
+    }
+
+    @Column(name = "UUID", length = 100)
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    @Column(name = "COVER", length = 100)
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    @JsonIgnoreProperties(value={"hibernateLazyInitializer"})
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    public List<Volume> getVolumes() {
+        return volumes;
+    }
+
+    public void setVolumes(List<Volume> volumes) {
+        this.volumes = volumes;
+    }
+
+    @JsonIgnoreProperties(value={"hibernateLazyInitializer"})
+    @OneToMany(mappedBy = "book", fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    public List<Chapter> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(List<Chapter> chapters) {
+        this.chapters = chapters;
     }
 
 }
